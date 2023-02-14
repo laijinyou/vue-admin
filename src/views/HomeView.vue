@@ -72,14 +72,14 @@ onMounted(() => {
 <template>
   <div>
     <nav class="bg-white border-b border-gray-200 fixed z-30 w-full">
-      <div class="p-3">
+      <div>
         <div class="flex items-center justify-between">
           <div class="flex items-center justify-start">
             <button
               id="toggleSidebarMobile"
               aria-expanded="true"
               aria-controls="sidebar"
-              class="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded"
+              class="text-white bg-blue-600 cursor-pointer p-3 hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100"
             >
               <svg
                 id="toggleSidebarMobileHamburger"
@@ -166,9 +166,9 @@ onMounted(() => {
               </svg>
             </button>
             <div class="hidden lg:flex items-center">
-              <span class="text-base font-normal text-gray-500 mr-5"
-                >Open source ❤️</span
-              >
+              <span class="text-base font-normal text-gray-500 mr-5">
+                Source
+              </span>
               <div class="-mb-1">
                 <a
                   class="github-button"
@@ -178,8 +178,9 @@ onMounted(() => {
                   data-size="large"
                   data-show-count="true"
                   aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub"
-                  >Star</a
                 >
+                  Star
+                </a>
               </div>
             </div>
             <a
@@ -201,7 +202,7 @@ onMounted(() => {
                   d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"
                 ></path>
               </svg>
-              Upgrade to Pro
+              Summer
             </a>
           </div>
         </div>
