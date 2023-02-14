@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import ExampleIcon from "../components/icons/IconExample.vue";
 
 let menu = [
@@ -64,6 +64,12 @@ function formatNumber(num:int) {
   return num.toLocaleString();
 }
 
+// Show or hide aside menu.
+let asideMenuStatus = ref(false);
+function setAsideMenuStatus() {
+  asideMenuStatus.value = !asideMenuStatus.value;
+}
+
 onMounted(() => {
   //
 });
@@ -76,13 +82,13 @@ onMounted(() => {
         <div class="flex items-center justify-between">
           <div class="flex items-center justify-start">
             <button
-              id="toggleSidebarMobile"
+              @click="setAsideMenuStatus()"
               aria-expanded="true"
               aria-controls="sidebar"
               class="text-white bg-blue-600 cursor-pointer p-3 hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100"
             >
               <svg
-                id="toggleSidebarMobileHamburger"
+                :class="asideMenuStatus ? 'hidden' : ''"
                 class="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -95,8 +101,8 @@ onMounted(() => {
                 ></path>
               </svg>
               <svg
-                id="toggleSidebarMobileClose"
-                class="w-6 h-6 hidden"
+                :class="asideMenuStatus ? '' : 'hidden'"
+                class="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
