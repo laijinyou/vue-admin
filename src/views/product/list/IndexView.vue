@@ -1,46 +1,41 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
 
-import IconBars3CenterLeft from "../components/icons/IconBars3CenterLeft.vue";
-import IconXMark from "../components/icons/IconXMark.vue";
-import IconMagnifyingGlass from "../components/icons/IconMagnifyingGlass.vue";
-import IconUserCircle from "../components/icons/IconUserCircle.vue";
-import IconLanguage from "../components/icons/IconLanguage.vue";
-import IconArrowLongUp from "../components/icons/IconArrowLongUp.vue";
-import IconArrowLongDown from "../components/icons/IconArrowLongDown.vue";
-import IconChevronUp from "../components/icons/IconChevronUp.vue";
-import IconChevronDown from "../components/icons/IconChevronDown.vue";
+import IconBars3CenterLeft from "@/components/icons/IconBars3CenterLeft.vue";
+import IconXMark from "@/components/icons/IconXMark.vue";
+import IconMagnifyingGlass from "@/components/icons/IconMagnifyingGlass.vue";
+import IconUserCircle from "@/components/icons/IconUserCircle.vue";
+import IconLanguage from "@/components/icons/IconLanguage.vue";
+import IconArrowLongUp from "@/components/icons/IconArrowLongUp.vue";
+import IconArrowLongDown from "@/components/icons/IconArrowLongDown.vue";
 
 let menu = [
   {
-    name: "Dashboard",
+    name: "产品列表",
   },
   {
-    name: "Dashboard",
+    name: "产品属性",
   },
   {
-    name: "Dashboard",
+    name: "属性类别",
   },
   {
-    name: "Dashboard",
+    name: "参数设置",
   },
   {
-    name: "Dashboard",
+    name: "产品评论",
   },
   {
-    name: "Dashboard",
+    name: "产品收藏",
   },
   {
-    name: "Dashboard",
+    name: "批量上传",
   },
   {
-    name: "Dashboard",
+    name: "产品品牌",
   },
   {
-    name: "Dashboard",
-  },
-  {
-    name: "Dashboard",
+    name: "品牌类别",
   },
 ];
 let currentOverview = [
@@ -142,46 +137,24 @@ onMounted(() => {
         <div
           class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0"
         >
-          <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-            <div class="flex-1 px-3 bg-white divide-y space-y-1">
-              <ul class="space-y-2 pb-2">
-                <li>
-                  <form action="#" method="GET" class="lg:hidden">
-                    <label for="mobile-search" class="sr-only">Search</label>
-                    <div class="relative">
-                      <div
-                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-                      >
-                        <IconMagnifyingGlass />
-                      </div>
-                      <input
-                        type="text"
-                        name="email"
-                        id="mobile-search"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5"
-                        placeholder="Search"
-                      />
-                    </div>
-                  </form>
+          <div class="flex-1 flex flex-col pb-4 overflow-y-auto">
+            <div class="flex-1 bg-white divide-y space-y-1">
+              <ul class="pb-2">
+                <li class="bg-gray-300 py-5 px-3">
+                  <span class="font-bold">产品管理</span>
                 </li>
                 <li v-for="(item, index) in menu" :key="index">
                   <a
                     href="#"
                     @click="setLevelMenuStatus()"
-                    class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
+                    class="text-sm hover:bg-gray-100 flex items-center p-3 group"
                   >
-                    <IconUserCircle />
                     <span class="ml-3 flex-1 whitespace-nowrap">
                       {{ item.name }}
                     </span>
                     <span
                       class="ml-3 text-sm font-medium inline-flex items-center justify-center px-2"
                     >
-                      <IconChevronUp
-                        class="w-3 h-3"
-                        v-if="isActivedLevelMenu"
-                      />
-                      <IconChevronDown class="w-3 h-3" v-else />
                     </span>
                   </a>
                 </li>
