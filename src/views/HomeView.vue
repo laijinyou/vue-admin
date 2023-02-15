@@ -68,9 +68,9 @@ let currentOverview = [
 ];
 
 // Show or hide aside menu.
-let asideMenuStatus = ref(false);
-function setAsideMenuStatus() {
-  asideMenuStatus.value = !asideMenuStatus.value;
+let isActivedAside = ref(false);
+function setAsideStatus() {
+  isActivedAside.value = !isActivedAside.value;
 }
 
 onMounted(() => {
@@ -85,13 +85,13 @@ onMounted(() => {
         <div class="flex items-center justify-between">
           <div class="flex items-center justify-start">
             <button
-              @click="setAsideMenuStatus()"
+              @click="setAsideStatus()"
               aria-expanded="true"
               aria-controls="sidebar"
               class="text-white bg-blue-500 cursor-pointer p-3 hover:bg-blue-600"
             >
-              <IconBars3CenterLeft :class="{ hidden: asideMenuStatus }" />
-              <IconXMark :class="{ hidden: !asideMenuStatus }" />
+              <IconBars3CenterLeft :class="{ hidden: isActivedAside }" />
+              <IconXMark :class="{ hidden: !isActivedAside }" />
             </button>
             <a href="#" class="text-xl font-bold flex items-center lg:ml-2.5">
               <img
@@ -140,10 +140,10 @@ onMounted(() => {
         </div>
       </div>
     </nav>
-    <div class="flex overflow-hidden bg-white pt-16">
+    <div class="flex overflow-hidden bg-white pt-12">
       <aside
-        id="sidebar"
-        class="fixed hidden z-20 h-full top-0 left-0 pt-16 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
+        :class="{ hidden: !isActivedAside }"
+        class="fixed z-20 h-full top-0 left-0 pt-12 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
         aria-label="Sidebar"
       >
         <div
@@ -216,8 +216,8 @@ onMounted(() => {
         </div>
       </aside>
       <div
-        class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10"
-        id="sidebarBackdrop"
+        class="bg-gray-900 opacity-50 fixed inset-0 z-10"
+        :class="{ hidden: !isActivedAside }"
       ></div>
       <div
         id="main-content"
