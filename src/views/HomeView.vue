@@ -8,45 +8,39 @@ import IconUserCircle from "../components/icons/IconUserCircle.vue";
 import IconLanguage from "../components/icons/IconLanguage.vue";
 import IconArrowLongUp from "../components/icons/IconArrowLongUp.vue";
 import IconArrowLongDown from "../components/icons/IconArrowLongDown.vue";
+import IconChevronUp from "../components/icons/IconChevronUp.vue";
+import IconChevronDown from "../components/icons/IconChevronDown.vue";
 
 let menu = [
   {
     name: "Dashboard",
-    new: false,
   },
   {
     name: "Dashboard",
-    new: true,
   },
   {
     name: "Dashboard",
-    new: true,
   },
   {
     name: "Dashboard",
-    new: false,
   },
   {
     name: "Dashboard",
-    new: false,
   },
   {
     name: "Dashboard",
-    new: false,
-  },
-];
-let menu2 = [
-  {
-    name: "Documentation",
   },
   {
-    name: "Documentation",
+    name: "Dashboard",
   },
   {
-    name: "Documentation",
+    name: "Dashboard",
   },
   {
-    name: "Documentation",
+    name: "Dashboard",
+  },
+  {
+    name: "Dashboard",
   },
 ];
 let currentOverview = [
@@ -71,6 +65,11 @@ let currentOverview = [
 let isActivedAside = ref(false);
 function setAsideStatus() {
   isActivedAside.value = !isActivedAside.value;
+}
+
+let isActivedLevelMenu = ref(false);
+function setLevelMenuStatus() {
+  isActivedLevelMenu.value = !isActivedLevelMenu.value;
 }
 
 onMounted(() => {
@@ -183,7 +182,7 @@ onMounted(() => {
                 <li v-for="(item, index) in menu" :key="index">
                   <a
                     href="#"
-                    target="_blank"
+                    @click="setLevelMenuStatus()"
                     class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group"
                   >
                     <IconUserCircle />
@@ -191,26 +190,17 @@ onMounted(() => {
                       {{ item.name }}
                     </span>
                     <span
-                      v-if="item.new"
-                      class="bg-gray-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full"
+                      class="ml-3 text-sm font-medium inline-flex items-center justify-center px-2"
                     >
-                      New
+                      <IconChevronUp
+                        class="w-3 h-3"
+                        v-if="isActivedLevelMenu"
+                      />
+                      <IconChevronDown class="w-3 h-3" v-else />
                     </span>
                   </a>
                 </li>
               </ul>
-              <div class="space-y-2 pt-2">
-                <a
-                  v-for="(item, index) in menu2"
-                  :key="index"
-                  href="#"
-                  target="_blank"
-                  class="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
-                >
-                  <IconUserCircle />
-                  <span class="ml-3">{{ item.name }}</span>
-                </a>
-              </div>
             </div>
           </div>
         </div>
