@@ -31,76 +31,113 @@ let asideMenuItems = ref([
     id: 2,
     name: "分类管理",
     isActived: false,
+    childrenMenu: [
+      { id: 1, name: "产品信息管理", isActived: false },
+      { id: 2, name: "产品属性管理", isActived: false },
+      { id: 3, name: "产品属性组管理", isActived: false },
+      { id: 4, name: "产品参数管理", isActived: false },
+      { id: 5, name: "产品评论", isActived: false },
+      { id: 6, name: "产品收藏", isActived: false },
+      { id: 7, name: "产品批量上传", isActived: false },
+      { id: 8, name: "产品品牌", isActived: false },
+      { id: 9, name: "品牌类别", isActived: false },
+    ],
   },
   {
     id: 3,
     name: "URL重写管理",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 4,
     name: "订单管理",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 5,
     name: "购物车&优惠券",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 6,
     name: "用户管理",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 7,
     name: "CMS文章",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 8,
     name: "基础配置",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 9,
     name: "支付参数配置",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 10,
     name: "Appfront配置",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 11,
     name: "Apphtml5配置",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 12,
     name: "Appserver配置",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 13,
     name: "权限管理",
     isActived: false,
+    childrenMenu: [],
   },
   {
     id: 14,
     name: "控制面板",
     isActived: false,
+    childrenMenu: [],
   },
 ]);
 
-function setAsideMenuStatus(currentId?: number, nextId?: number) {
-  if (nextId) {
-    //
+function setAsideMenuStatus(currentId: number, parentId?: number) {
+  if (parentId) {
+    // set the other parent children menu css
+    for (let i = 0; i < asideMenuItems.value.length; i++) {
+      if (i !== parentId - 1) {
+        for (let j = 0; j < asideMenuItems.value[i].childrenMenu.length; j++) {
+          asideMenuItems.value[i].childrenMenu[j].isActived = false;
+        }
+      }
+    }
+    // set current children menu css
+    for (let k = 0; k < asideMenuItems.value[parentId - 1].childrenMenu.length; k++) {
+      if (k === currentId - 1) {
+        asideMenuItems.value[parentId - 1].childrenMenu[currentId - 1].isActived = true;
+      } else {
+        asideMenuItems.value[parentId - 1].childrenMenu[k].isActived = false;
+      }
+    }
   } else {
-    asideMenuItems.value[0].isActived = !asideMenuItems.value[0].isActived;
+    asideMenuItems.value[currentId - 1].isActived = !asideMenuItems.value[currentId - 1].isActived;
   }
-  console.log(asideMenuItems);
 }
 let currentOverview = [
   {
@@ -160,10 +197,10 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="flex overflow-hidden pt-12 bg-gray-300">
+    <div class="flex overflow-hidden pt-12">
       <aside
         :class="{ hidden: !isActivedAside }"
-        class="fixed z-20 h-full top-0 left-0 pt-12 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75 border-r border-gray-300"
+        class="fixed z-20 h-full top-0 left-0 pt-12 flex lg:flex flex-shrink-0 flex-col w-52 bg-gray-300 transition-width duration-75 border-r border-gray-300"
       >
         <div class="relative flex-1 flex flex-col min-h-0">
           <div class="flex-1 flex flex-col overflow-y-auto">
@@ -172,13 +209,14 @@ onMounted(() => {
                 <li v-for="(asideMenuItem, index) in asideMenuItems" :key="`asideMenuItem${index}`">
                   <div
                     @click="setAsideMenuStatus(asideMenuItem.id)"
-                    class="flex items-center p-4 group bg-gray-300 hover:bg-gray-400"
+                    :class="{ 'bg-gray-400': asideMenuItem.isActived }"
+                    class="flex items-center group bg-gray-300 hover:bg-gray-400"
                   >
-                    <IconUserCircle />
-                    <span class="ml-3 flex-1 whitespace-nowrap">
+                    <div class="p-3"><IconUserCircle /></div>
+                    <span class="flex-1 whitespace-nowrap">
                       {{ asideMenuItem.name }}
                     </span>
-                    <span class="ml-3 text-sm font-medium inline-flex items-center justify-center px-2">
+                    <div class="p-4 inline-flex items-center justify-center">
                       <IconChevronUp
                         class="w-3 h-3"
                         v-if="asideMenuItem.isActived && !!asideMenuItem.childrenMenu?.length"
@@ -187,7 +225,7 @@ onMounted(() => {
                         class="w-3 h-3"
                         v-else-if="!asideMenuItem.isActived && !!asideMenuItem.childrenMenu?.length"
                       />
-                    </span>
+                    </div>
                   </div>
                   <ul
                     :class="{
@@ -195,10 +233,11 @@ onMounted(() => {
                     }"
                   >
                     <li
-                      class="flex items-center px-8 py-3 group bg-gray-100 hover:bg-gray-200"
                       v-for="(asideChildrenMenuItem, index) in asideMenuItem.childrenMenu"
                       :key="`asideChildrenMenuItem${index}`"
-                      @click="setAsideMenuStatus(asideMenuItem.id, asideChildrenMenuItem.id)"
+                      @click="setAsideMenuStatus(asideChildrenMenuItem.id, asideMenuItem.id)"
+                      :class="{ 'bg-gray-200': asideChildrenMenuItem.isActived }"
+                      class="flex items-center px-8 py-3 group bg-gray-100 hover:bg-gray-200"
                     >
                       {{ asideChildrenMenuItem.name }}
                     </li>
@@ -210,7 +249,7 @@ onMounted(() => {
         </div>
       </aside>
       <div class="bg-gray-900 opacity-50 fixed inset-0 z-10" :class="{ hidden: !isActivedAside }"></div>
-      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-52">
         <main>
           <div class="pt-6 px-4">
             <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
