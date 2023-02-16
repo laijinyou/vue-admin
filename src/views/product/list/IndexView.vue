@@ -8,34 +8,62 @@ import IconUserCircle from "@/components/icons/IconUserCircle.vue";
 import IconLanguage from "@/components/icons/IconLanguage.vue";
 import IconArrowLongUp from "@/components/icons/IconArrowLongUp.vue";
 import IconArrowLongDown from "@/components/icons/IconArrowLongDown.vue";
+import IconChevronUp from "@/components/icons/IconChevronUp.vue";
+import IconChevronDown from "@/components/icons/IconChevronDown.vue";
 
-let menu = [
+let asideMenu = [
   {
-    name: "产品列表",
+    name: "产品管理",
+    childrenMenu: [
+      { name: "产品信息管理" },
+      { name: "产品属性管理" },
+      { name: "产品属性组管理" },
+      { name: "产品参数管理" },
+      { name: "产品评论" },
+      { name: "产品收藏" },
+      { name: "产品批量上传" },
+      { name: "产品品牌" },
+      { name: "品牌类别" },
+    ],
   },
   {
-    name: "产品属性",
+    name: "分类管理",
   },
   {
-    name: "属性类别",
+    name: "URL重写管理",
   },
   {
-    name: "参数设置",
+    name: "订单管理",
   },
   {
-    name: "产品评论",
+    name: "购物车&优惠券",
   },
   {
-    name: "产品收藏",
+    name: "用户管理",
   },
   {
-    name: "批量上传",
+    name: "CMS文章",
   },
   {
-    name: "产品品牌",
+    name: "基础配置",
   },
   {
-    name: "品牌类别",
+    name: "支付参数配置",
+  },
+  {
+    name: "Appfront配置",
+  },
+  {
+    name: "Apphtml5配置",
+  },
+  {
+    name: "Appserver配置",
+  },
+  {
+    name: "权限管理",
+  },
+  {
+    name: "控制面板",
   },
 ];
 let currentOverview = [
@@ -90,73 +118,61 @@ onMounted(() => {
             <img src="@/assets/logo.svg" class="h-6 mr-2" alt="Windster Logo" />
             <span class="self-center whitespace-nowrap">Dashboard</span>
           </a>
-          <form action="#" method="GET" class="hidden lg:block lg:pl-32">
-            <label for="topbar-search" class="sr-only">Search</label>
-            <div class="mt-1 relative lg:w-64">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <IconMagnifyingGlass />
-              </div>
-              <input
-                type="text"
-                name="email"
-                id="topbar-search"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-8 p-1"
-                placeholder="Search"
-              />
-            </div>
-          </form>
         </div>
         <div class="flex items-center">
-          <button
-            id="toggleSidebarMobileSearch"
-            type="button"
-            class="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg"
-          >
-            <span class="sr-only">Search</span>
-            <IconMagnifyingGlass />
-          </button>
-          <div class="hidden lg:flex items-center">
-            <div class="mr-3">
-              <IconLanguage />
-            </div>
-            <div class="mr-3">
-              <IconUserCircle class="text-gray-500" />
-            </div>
+          <div class="mr-3">
+            <IconLanguage />
+          </div>
+          <div class="mr-3">
+            <IconUserCircle class="text-gray-500" />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex overflow-hidden bg-white pt-12">
+    <div class="flex overflow-hidden pt-12 bg-gray-300">
       <aside
         :class="{ hidden: !isActivedAside }"
-        class="fixed z-20 h-full top-0 left-0 pt-12 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
-        aria-label="Sidebar"
+        class="fixed z-20 h-full top-0 left-0 pt-12 flex lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75 border-r border-gray-300"
       >
-        <div
-          class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0"
-        >
-          <div class="flex-1 flex flex-col pb-4 overflow-y-auto">
-            <div class="flex-1 bg-white divide-y space-y-1">
-              <ul class="pb-2">
-                <li class="bg-gray-300 py-5 px-3">
-                  <span class="font-bold">产品管理</span>
-                </li>
-                <li v-for="(item, index) in menu" :key="index">
-                  <a
-                    href="#"
+        <div class="relative flex-1 flex flex-col min-h-0">
+          <div class="flex-1 flex flex-col overflow-y-auto">
+            <div class="flex-1">
+              <ul>
+                <li
+                  v-for="(asideMenuItemL1, index) in asideMenu"
+                  :key="`asideMenuItemL1${index}`"
+                >
+                  <div
                     @click="setLevelMenuStatus()"
-                    class="text-sm hover:bg-gray-100 flex items-center p-3 group"
+                    class="flex items-center p-4 group bg-gray-300 hover:bg-gray-400"
                   >
+                    <IconUserCircle />
                     <span class="ml-3 flex-1 whitespace-nowrap">
-                      {{ item.name }}
+                      {{ asideMenuItemL1.name }}
                     </span>
                     <span
                       class="ml-3 text-sm font-medium inline-flex items-center justify-center px-2"
                     >
+                      <IconChevronUp
+                        class="w-3 h-3"
+                        v-if="isActivedLevelMenu"
+                      />
+                      <IconChevronDown class="w-3 h-3" v-else />
                     </span>
-                  </a>
+                  </div>
+                  <ul
+                    :class="{ hidden: !asideMenuItemL1.childrenMenu?.length }"
+                  >
+                    <li
+                      class="flex items-center px-8 py-3 group bg-gray-100 hover:bg-gray-200"
+                      v-for="(
+                        asideMenuItemL2, index
+                      ) in asideMenuItemL1.childrenMenu"
+                      :key="`asideMenuItemL2${index}`"
+                    >
+                      {{ asideMenuItemL2.name }}
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>
