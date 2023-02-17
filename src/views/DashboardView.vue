@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 
 import IconBars3CenterLeft from "@/components/icons/IconBars3CenterLeft.vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
